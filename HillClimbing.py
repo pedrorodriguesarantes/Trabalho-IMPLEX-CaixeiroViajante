@@ -1,6 +1,8 @@
 from Funcoes import calcular_distancia, aleatorizar, gera_vizinho
 
 def HillClimbing(vertices, tentativas):
+    log_resultados = []
+
     melhor_distancia = None
     melhor_vertices = None
 
@@ -22,6 +24,11 @@ def HillClimbing(vertices, tentativas):
                 local = True
         
         tentativa = tentativa + 1
+        
+        log_resultados.append({
+            'MELHOR GLOBAL': melhor_distancia,
+            'MELHOR LOCAL': distancia_corrente
+        })
 
         if melhor_distancia == None or melhor_distancia > distancia_corrente:
             melhor_distancia = distancia_corrente
@@ -30,4 +37,4 @@ def HillClimbing(vertices, tentativas):
         print(melhor_distancia, distancia_corrente)
         
     print(melhor_distancia)
-    return melhor_vertices
+    return melhor_vertices, log_resultados

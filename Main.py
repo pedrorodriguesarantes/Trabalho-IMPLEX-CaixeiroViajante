@@ -10,15 +10,47 @@ class Vertice:
         self.conteudo = conteudo
 
 
-def testar(caminho):
-    dataframe = pd.read_csv(caminho, sep=" ", header = None)
-    vetorVertices = list()
+def importar_vertices(caminho):
+    ##DO lucas
 
-    for conjunto in dataframe.values:
-        vertice = Vertice(conjunto[1], conjunto[2], conjunto[0])
-        vetorVertices.append(vertice)
+    dataset = pd.read_csv(
+        filepath_or_buffer = vetor, 
+        sep = " ", 
+        header = None
+        )
 
-    return vetorVertices
+    vetor_vertices = list()
 
-vetorVertices = testar('Exemplos/att48.tsp.txt')
-melhor = HillClimbing(vetorVertices, 1000)
+    for conjunto in dataset.values:
+        vertice = Vertice( 
+            coordenada_x = conjunto[1], 
+            coordenada_y = conjunto[2], 
+            conteudo = conjunto[0]
+            )
+
+        vetor_vertices.append(vertice)
+
+    return vetor_vertices
+
+def hill(caminho, tentativas):
+    vetor_vertices = importar_vertices(caminho = caminho)
+    
+    solucao = HillClimbing(
+        vertices = vetor_vertices, 
+        tentativas = tentativas
+        )
+
+    return solucao
+
+caminho = 'att48.tsp.txt'
+
+tentativas = 10
+melhor, log_resultados = hill(
+    caminho = 'Exemplos/{}'.format(caminho), 
+    tentativas = tentativas
+    )
+
+pd.DataFrame(log_resultados).to_csv(
+    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
+    sep = ';'
+    )
