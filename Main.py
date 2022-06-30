@@ -66,13 +66,13 @@ def siall(caminho, t_max, k, kt, t_min):
         )
 
     pd.DataFrame(log_resultados).to_csv(
-        'Resultados/SimulatedAnnealing - {} - T_MAX {}.csv'.format('att48.tsp.txt', t_max), 
+        'Resultados/SimulatedAnnealing - {} - T_MAX {}.csv'.format('berling52.tsp.txt', t_max), 
         sep = ';'
     )
 
     return solucao
 
-caminho = 'att48.tsp.txt'
+caminho = 'berlin52.tsp.txt'
 melhor = siall(
     caminho = 'Exemplos/{}'.format(caminho),
     t_max = 10,
