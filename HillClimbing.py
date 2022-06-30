@@ -47,12 +47,21 @@ def hillclimbing(vertices, tentativas):
         
         tentativa = tentativa + 1
         
+        caminho = ""
+        try:
+            for vertice_v in melhor_vertices:
+                caminho = caminho + "{}-".format(vertice_v.conteudo)
+        except:
+            pass
+        
         log_resultados.append({
             'MELHOR GLOBAL': melhor_distancia,
-            'MELHOR LOCAL': distancia_corrente
+            'MELHOR LOCAL': distancia_corrente,
+            'CAMINHO': caminho,
         })
 
         if melhor_distancia == None or melhor_distancia > distancia_corrente:
+
             melhor_distancia = distancia_corrente
             melhor_vertices = solucao_corrente
 

@@ -45,17 +45,22 @@ def importar_vertices(caminho):
     return vetor_vertices
 
 def hill(caminho, tentativas):
-    vetor_vertices = importar_vertices(caminho = caminho)
+    vetor_vertices = importar_vertices(caminho = 'Exemplos/{}'.format(caminho))
     
-    solucao = hillclimbing(
+    solucao, log_resultados = hillclimbing(
         vertices = vetor_vertices, 
         tentativas = tentativas
         )
 
+    pd.DataFrame(log_resultados).to_csv(
+        'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
+        sep = ';'
+    )
+
     return solucao
 
 def siall(caminho, t_max, k, kt, t_min):
-    vetor_vertices = importar_vertices(caminho = caminho)
+    vetor_vertices = importar_vertices(caminho = 'Exemplos/{}'.format(caminho))
     
     solucao, log_resultados = simulatedannealing(
             vertices = vetor_vertices, 
@@ -66,25 +71,35 @@ def siall(caminho, t_max, k, kt, t_min):
         )
 
     pd.DataFrame(log_resultados).to_csv(
-        'Resultados/SimulatedAnnealing - {} - T_MAX {}.csv'.format('berling52.tsp.txt', t_max), 
+        'Resultados/SimulatedAnnealing - {} - T_MAX {}.csv'.format(caminho, t_max), 
         sep = ';'
     )
 
     return solucao
 
-caminho = 'berlin52.tsp.txt'
+caminho = 'att48.tsp.txt'
+melhor = hill(
+    caminho = caminho,
+    tentativas = 10,
+)
+
+melhor = hill(
+    caminho = caminho,
+    tentativas = 50,
+)
+
 melhor = siall(
-    caminho = 'Exemplos/{}'.format(caminho),
+    caminho = caminho,
     t_max = 10,
     k = 0.95,
     kt = 20,
-    t_min = 5
-    )
+    t_min = 5,
+)
 
 melhor = siall(
-    caminho = 'Exemplos/{}'.format(caminho),
+    caminho = caminho,
     t_max = 100,
     k = 0.9,
     kt = 25,
-    t_min = 10
-    )
+    t_min = 10,
+)

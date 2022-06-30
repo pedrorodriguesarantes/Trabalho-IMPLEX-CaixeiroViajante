@@ -39,9 +39,14 @@ def simulatedannealing(vertices, T_max, k, KT, T_min):
                 melhor_solucao = vizinho.copy()
                 melhor_distancia = distancia_vizinho
                 
+                caminho = ""
+                for vertice_v in melhor_solucao:
+                    caminho = caminho + "{}-".format(vertice_v.conteudo)
+
                 log_resultados.append({
                         'MELHOR GLOBAL': melhor_distancia,
-                        'MELHOR LOCAL': distancia_vizinho
+                        'MELHOR LOCAL': distancia_vizinho,
+                        'CAMINHO': caminho[:-1],
                 })
                 
                 print(melhor_distancia, distancia_vizinho)
@@ -54,11 +59,16 @@ def simulatedannealing(vertices, T_max, k, KT, T_min):
                     melhor_solucao = vizinho.copy()
                     melhor_distancia = distancia_vizinho
 
+                    caminho = ""
+                    for vertice_v in melhor_solucao:
+                        caminho = caminho + "{}-".format(vertice_v.conteudo)
+
                     log_resultados.append({
                         'MELHOR GLOBAL': melhor_distancia,
-                        'MELHOR LOCAL': distancia_vizinho
+                        'MELHOR LOCAL': distancia_vizinho,
+                        'CAMINHO': caminho[:-1],
                     })
-                    
+
                     print(melhor_distancia, distancia_vizinho)
             t = t + 1
         T = k * T
