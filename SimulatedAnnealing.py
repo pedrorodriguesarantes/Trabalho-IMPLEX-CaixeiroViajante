@@ -1,4 +1,4 @@
-from Funcoes import aleatorizar, calcular_distancia
+from funcoes import aleatorizar, calcular_distancia
 import numpy as np
 
 def gerar_vizinho(solucao_corrente):
@@ -21,7 +21,7 @@ def gerar_vizinho(solucao_corrente):
     aleatorio = np.random.randint(0, len(solucoes))
     return solucoes[aleatorio]
 
-def SimulateAnnealing(vertices, T_max, k, KT, T_min):
+def simulatedannealing(vertices, T_max, k, KT, T_min):
     T = T_max
     melhor_solucao = aleatorizar(vertices)
     melhor_distancia = calcular_distancia(melhor_solucao)
