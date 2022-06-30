@@ -5,8 +5,8 @@ import pandas as pd
 
 class Vertice:
     def __init__(self, coordenada_x, coordenada_y, conteudo):
-        self.x = coordenada_x
-        self.y = coordenada_y
+        self.x = float(coordenada_x)
+        self.y = float(coordenada_y)
         self.conteudo = conteudo
 
 
@@ -27,11 +27,8 @@ def importar_vertices(caminho):
     if (tabela_virtual[len(tabela_virtual) - 1] == []):
         tabela_virtual.pop()
 
-    dataset = pd.read_csv(
-        filepath_or_buffer = vetor, 
-        sep = " ", 
-        header = None
-        )
+    dataset = pd.DataFrame(tabela_virtual)
+    print(dataset.tail(10))
 
     vetor_vertices = list()
 
@@ -56,9 +53,31 @@ def hill(caminho, tentativas):
 
     return solucao
 
-caminho = 'att48.tsp.txt'
+caminho = 'bier127.tsp.txt'
 
 tentativas = 10
+melhor, log_resultados = hill(
+    caminho = 'Exemplos/{}'.format(caminho), 
+    tentativas = tentativas
+    )
+
+pd.DataFrame(log_resultados).to_csv(
+    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
+    sep = ';'
+    )
+
+tentativas = 50
+melhor, log_resultados = hill(
+    caminho = 'Exemplos/{}'.format(caminho), 
+    tentativas = tentativas
+    )
+
+pd.DataFrame(log_resultados).to_csv(
+    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
+    sep = ';'
+    )
+
+tentativas = 100
 melhor, log_resultados = hill(
     caminho = 'Exemplos/{}'.format(caminho), 
     tentativas = tentativas
