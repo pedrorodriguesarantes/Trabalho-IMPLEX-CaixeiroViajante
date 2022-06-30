@@ -1,5 +1,6 @@
 from Funcoes import distancia_euclidiana, calcular_distancia, aleatorizar
 from HillClimbing import HillClimbing
+from SimulatedAnnealing import SimulateAnnealing
 
 import pandas as pd
 
@@ -53,37 +54,23 @@ def hill(caminho, tentativas):
 
     return solucao
 
-caminho = 'bier127.tsp.txt'
+def siall(caminho):
+    vetor_vertices = importar_vertices(caminho = caminho)
+    
+    solucao, log_resultados = SimulateAnnealing(
+            vertices = vetor_vertices, 
+            T_max = 10,
+            k =  0.95, 
+            KT = 20,
+            T_min = 5,
+        )
 
-tentativas = 10
-melhor, log_resultados = hill(
-    caminho = 'Exemplos/{}'.format(caminho), 
-    tentativas = tentativas
+    pd.DataFrame(log_resultados).to_csv(
+        'Resultados/SimulatedAnnealing - {} - T_MAX {}.csv'.format('att48.tsp.txt', 10), 
+        sep = ';'
     )
 
-pd.DataFrame(log_resultados).to_csv(
-    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
-    sep = ';'
-    )
+    return solucao
 
-tentativas = 50
-melhor, log_resultados = hill(
-    caminho = 'Exemplos/{}'.format(caminho), 
-    tentativas = tentativas
-    )
-
-pd.DataFrame(log_resultados).to_csv(
-    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
-    sep = ';'
-    )
-
-tentativas = 100
-melhor, log_resultados = hill(
-    caminho = 'Exemplos/{}'.format(caminho), 
-    tentativas = tentativas
-    )
-
-pd.DataFrame(log_resultados).to_csv(
-    'Resultados/HillClimbing - {} - {}.csv'.format(caminho, tentativas), 
-    sep = ';'
-    )
+caminho = 'att48.tsp.txt'
+melhor = siall(caminho = 'Exemplos/{}'.format(caminho))

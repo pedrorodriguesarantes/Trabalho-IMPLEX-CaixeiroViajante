@@ -26,25 +26,40 @@ def SimulateAnnealing(vertices, T_max, k, KT, T_min):
     melhor_solucao = aleatorizar(vertices)
     melhor_distancia = calcular_distancia(melhor_solucao)
 
-    while T < T_min:
+    log_resultados = list()
+
+    while T >= T_min:
         t = 0
         
         while t != KT:
-            vizinho = gerar_vizinho(solucao_corrente)
+            vizinho = gerar_vizinho(melhor_solucao)
             distancia_vizinho = calcular_distancia(vizinho)
             
             if distancia_vizinho < melhor_distancia:
+                melhor_solucao = vizinho.copy()
                 melhor_distancia = distancia_vizinho
-                melhor_solucao = vizinho
+                
+                log_resultados.append({
+                        'MELHOR GLOBAL': melhor_distancia,
+                        'MELHOR LOCAL': distancia_vizinho
+                })
+                
+                print(melhor_distancia, distancia_vizinho)
             
             else:
                 sub = melhor_distancia - distancia_vizinho
-                verificar = 2.71828 ^ ((sub) / T)
+                verificar = 2.71828 ** ((sub) / T)
                 
-                if np.random.randint(0, 1) < verificar:
-                    melhor_solucao = vizinho
+                if np.random.randint(0, 2) < verificar:
+                    melhor_solucao = vizinho.copy()
                     melhor_distancia = distancia_vizinho
 
+                    log_resultados.append({
+                        'MELHOR GLOBAL': melhor_distancia,
+                        'MELHOR LOCAL': distancia_vizinho
+                    })
+                    
+                    print(melhor_distancia, distancia_vizinho)
             t = t + 1
         T = k * T
-    return
+    return melhor_solucao, log_resultados
