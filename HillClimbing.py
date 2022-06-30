@@ -1,4 +1,26 @@
-from Funcoes import calcular_distancia, aleatorizar, gera_vizinho
+from Funcoes import calcular_distancia, aleatorizar
+
+def gera_vizinho(solucao_corrente):
+    melhor_solucao = None
+    melhor_distancia = None
+    y = 0
+    while y < len(solucao_corrente):
+        x = 0
+        while x < y - 1:
+            vizinho = solucao_corrente.copy()
+            troca = vizinho[x]
+            vizinho[x] = vizinho[y]
+            vizinho[y] = troca
+            distancia_vizinho = calcular_distancia(vizinho)
+
+            if melhor_distancia == None or melhor_distancia > distancia_vizinho:
+                melhor_solucao = vizinho.copy()
+                melhor_distancia = distancia_vizinho
+
+            x = x + 1
+        y = y + 1
+    
+    return melhor_solucao
 
 def HillClimbing(vertices, tentativas):
     log_resultados = []
