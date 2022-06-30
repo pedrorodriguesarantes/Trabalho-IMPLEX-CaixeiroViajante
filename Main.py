@@ -11,7 +11,21 @@ class Vertice:
 
 
 def importar_vertices(caminho):
-    ##DO lucas
+    # Montagem da Tabela Virtual no Vetor/Array
+    arquivo_lido = None
+    
+    with open(caminho, 'r') as arquivo:
+        arquivo_lido = arquivo.read()
+    
+    tabela_virtual = []
+    arquivo_por_linha = arquivo_lido.split("\n")
+    
+    for linha in arquivo_por_linha:
+        linha_virtual = linha.split()
+        tabela_virtual.append(linha_virtual)
+        
+    if (tabela_virtual[len(tabela_virtual) - 1] == []):
+        tabela_virtual.pop()
 
     dataset = pd.read_csv(
         filepath_or_buffer = vetor, 
