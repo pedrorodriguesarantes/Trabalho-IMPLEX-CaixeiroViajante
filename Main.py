@@ -77,7 +77,7 @@ def siall(caminho, t_max, k, kt, t_min):
 
     return solucao
 
-caminho = 'att48.tsp.txt'
+caminho = 'st70.tsp.txt'
 melhor = hill(
     caminho = caminho,
     tentativas = 10,
