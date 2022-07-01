@@ -71,5 +71,5 @@ def simulatedannealing(vertices, T_max, k, KT, T_min):
 
                     print(melhor_distancia, distancia_vizinho)
             t = t + 1
-        T = k * T
+        T = k * T 
     return melhor_solucao, log_resultados
